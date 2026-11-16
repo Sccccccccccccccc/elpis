@@ -21,4 +21,11 @@ module.exports = (app) => {
         }
     }))
 
+    // 引入 ctx.bodyParser 
+    const bodyParser = require('koa-bodyparser');
+    app.use(bodyParser({
+        formLimit: '1000mb',
+        enableTypes: ['json', 'form', 'text']
+    }));
+
 }

@@ -1,6 +1,7 @@
 module.exports = (app) => {
-    return class ProjectService {
-
+    const BaseService = require('./base')(app);
+    return class ProjectService extends BaseService {
+        
         async getProjectList() {
             // 没有连接到数据库，暂时返回mock数据
             return [
