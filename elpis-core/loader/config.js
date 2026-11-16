@@ -25,11 +25,11 @@ module.exports = (app) => {
     try {
         defaultConfig = require( path.resolve(configPath, `.${sep}config.default.js`));
     } catch(e) {
-        console.log(' default.config.js 文件不存在 ',e)
+        console.log(' config.default.js 文件不存在 ', configPath, sep)
     }
 
     // 获取 env.config
-    const envConfig = {};
+    let envConfig = {};
     try {
 
         if(app.env.isLocal()) {
@@ -41,10 +41,11 @@ module.exports = (app) => {
         }
 
     }catch(e) {
-        console.log(' env.config.js 文件不存在', e)
+        console.log(' env.config.js 文件不存在', e.message)
     }
 
     // 覆盖并加载config配置
     app.config = Object.assign({}, defaultConfig, envConfig);
-
+    console.log('app.config', app.config, 'NODE_ENV', process.env.NODE_ENV);
+    
 }

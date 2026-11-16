@@ -64,7 +64,7 @@ module.exports = {
             require(`${app.businessPath}${sep}middleware.js`)(app)
             console.log('全局中间件已注册');
         } catch (err) {
-            console.log('全局中间件注册失败',err);
+            console.log('全局中间件注册失败');
         }
 
         // 注册路由 放到最后
