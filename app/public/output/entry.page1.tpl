@@ -46,7 +46,7 @@
                 resultEl.textContent = '请求中...';
 
                 try {
-                    var res = await fetch('/api/body-parser', {
+                    var res = await fetch('/test/body-parser', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
@@ -61,4 +61,6 @@
         })();
     </script>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/js-md5@0.8.3/src/md5.min.js"></script>
 </html>

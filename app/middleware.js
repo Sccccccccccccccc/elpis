@@ -29,6 +29,8 @@ module.exports = (app) => {
     }));
 
     // 异常捕获中间件引入
-    app.use(app.middlewares.errorHandler)
+    app.use(app.middlewares.errorHandler);
 
+    // 签名合法性校验
+    app.use(app.middlewares.apiSignVerify);
 }
