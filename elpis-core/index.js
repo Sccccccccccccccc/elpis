@@ -57,7 +57,6 @@ module.exports = {
 
         // 加载extend
         extendLoader(app);
-        console.log('extendLoader', app);
         
         // 注册全局中间件（为用户提供自定义中间件入口）
         try {

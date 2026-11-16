@@ -28,4 +28,7 @@ module.exports = (app) => {
         enableTypes: ['json', 'form', 'text']
     }));
 
+    // 异常捕获中间件引入
+    app.use(app.middlewares.errorHandler)
+
 }
