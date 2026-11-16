@@ -21,7 +21,7 @@ const { sep } = path;
 module.exports = (app) => {
 
     // 读取 app/router-schema 目录下的所有文件
-    const routerSchemaPath = path.resolve(app.businessPath, `.${sep}middleware`);
+    const routerSchemaPath = path.resolve(app.businessPath, `.${sep}router-schema`);
     const fileList = glob.sync( path.resolve(routerSchemaPath,`.${sep}**${sep}**.js`));
 
     // 注册所有的 router-schema，使得 app.routerSchema.${api} 可以访问

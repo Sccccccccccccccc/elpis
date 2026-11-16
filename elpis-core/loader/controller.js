@@ -62,6 +62,8 @@ module.exports = (app) => {
 
     })
 
+    console.log('loader-controller', controller);
+    
     app.controller = controller;
 
 }
