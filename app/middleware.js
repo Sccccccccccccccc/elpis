@@ -5,8 +5,11 @@
 const path = require('path');
 
 module.exports = (app) => {
-    // 模板渲染引擎
+    // 静态根目录配置
+    const koaStatic = require('koa-static');
+    app.use(koaStatic(path.resolve( process.cwd(), './app/public')));
 
+    // 模板渲染引擎
     const koaNunjucks = require('koa-nunjucks-2');
 
     app.use(koaNunjucks({

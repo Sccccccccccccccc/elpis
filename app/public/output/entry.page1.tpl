@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="icon" type="image/x-icon" href="/static/icon.png">
+    <title>{{name}}？？</title>
 </head>
 <body>
-    <h1>page1 test</h1>
+    <h1>page1 test {{env}} {{options}}</h1>
 </body>
 </html>

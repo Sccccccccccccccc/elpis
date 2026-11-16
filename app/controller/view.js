@@ -8,7 +8,11 @@ module.exports = (app, router) => {
          */
 
         async render(ctx) {
-            await ctx.render(`output/entry.${ctx.params.page}`);
+            await ctx.render(`output/entry.${ctx.params.page}`, {
+                name: app.options?.name,
+                env: app.env.get(),
+                options: JSON.stringify(app.options),
+            });
         }
      }
  
