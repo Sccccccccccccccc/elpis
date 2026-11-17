@@ -3,5 +3,6 @@
 package-lock.json
 logs
 .env*
+dist
 
 /src/generated/prisma
