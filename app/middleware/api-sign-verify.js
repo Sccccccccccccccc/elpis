@@ -11,9 +11,12 @@ module.exports = (app) => {
 
     const signKey = 'djasiodajdalsjifpasdjoas';
 
+    // 页面演示接口不参与签名，便于单独验证 bodyParser / api-params-verify
+    const signWhitelist = ['/api/body-parser', '/api/params-verify-demo'];
+
     return async function apiSignVerify(ctx, next) {
         // 只对 api 请求做签名校验，页面/静态资源等其他请求直接放行
-        if (!ctx.path.startsWith('/api')) {
+        if (!ctx.path.startsWith('/api') || signWhitelist.includes(ctx.path)) {
             return await next();
         }
 
