@@ -7,7 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebPackPlugin = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebpackInjectAttributesPlugin = require('html-webpack-inject-attributes-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 
 const path = require('path');
 
@@ -42,8 +41,7 @@ const webpackConfig = merge.smart(baseWithoutOverriddenRules, {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env'],
-                        plugins: ['@babel/plugin-transform-runtime']
+                        presets: ['@babel/preset-env']
                     }
                 }
             },
@@ -91,29 +89,25 @@ const webpackConfig = merge.smart(baseWithoutOverriddenRules, {
             chunkFilename: 'css/[name]_[contenthash:8].css',
         }),
 
-        // 优化并压缩css资源
-        new CssMinimizerPlugin({
-            parallel: false
-        }),
         // 浏览器在请求资源时，不发送用户的身份凭证
         new HtmlWebpackInjectAttributesPlugin({
             crossorigin: 'anonymous'
         })
     ],
     optimization: {
-        // 使用 TeserPlugin 的并发与缓存，提升压缩阶段的性能
-        // 清除 console.log
         minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                cache: true, // 启用缓存以加快构建速度
-                parallel: false, // 关闭多进程压缩，避免子进程启动失败（spawn EPERM）
-                terserOptions: {
-                    compress: {
-                        drop_console: true // 清除 console.log
-                    }
+        // JS 交给 webpack 5.112 自带的 minimizer（terser 5）
+        minimizeOptions: {
+            javascript: {
+                compress: {
+                    drop_console: true // 清除 console.log
                 }
-
+            }
+        },
+        // CSS 单独压缩；webpack 会自动再补上 JS 的默认 minimizer
+        minimizer: [
+            new CssMinimizerPlugin({
+                parallel: false
             })
         ]
     }
