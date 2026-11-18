@@ -2,18 +2,38 @@
  * webpack5 基础配置
  *
  */
-
+const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
 const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+// 动态构造 pageEntries
+const pageEntries = {};
+const htmlWebpackPluginList = [];
+
+// 获取所有入口文件（entry.xxx.js）
+const entryFileList = path.resolve(process.cwd(), "./app/pages/**/entry.*.js");
+glob.sync(entryFileList).forEach((entryFile) => {
+
+    const entryName = path.basename(entryFile, '.js');
+    // 构造 entry
+    pageEntries[entryName] = entryFile;
+    // 构造最终渲染的页面文件
+    htmlWebpackPluginList.push(
+        // html-webpack-plugin 辅助注入打包后的bundle文件到tpl文件中
+        new HtmlWebpackPlugin({
+            filename: path.resolve(process.cwd(), './app/public/dist/', `${entryName}.tpl`),
+            template: path.resolve(process.cwd(), './app/view/entry.tpl'),
+            chunks: [entryName],
+        })
+    )
+
+})
+
 module.exports = {
-    // 入口配置
-    entry: {
-        'entry.page1': './app/pages/page1/entry.page1.js',
-        'entry.page2': './app/pages/page2/entry.page2.js'
-    },
+    // 入口配置：pageEntries 是 { 'entry.page1': '路径', 'entry.page2': '路径' }
+    entry: pageEntries,
     // 模块解析配置（决定了要加载解释哪些模块，以及用什么方式去解释 ）
     module: {
         rules: [
@@ -66,6 +86,7 @@ module.exports = {
         ]
     },
     // 产物输出路径
+    // 开发与生产环境不一致，需要在各自环境中自行配置
     output: {
         filename: 'js/[name]_[chunkhash:8].bundle.js',
         path: path.join(process.cwd(), './app/public/dist/prod'),
@@ -76,7 +97,10 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.less', '.css' ],
         alias: {
-            '@': path.join(process.cwd(), './app'),
+            '@': path.resolve(process.cwd(), './app/pages'),
+            '$weidgets': path.resolve(process.cwd(), './app/pages/weidgets'),
+            '$common': path.resolve(process.cwd(), './app/pages/common'),
+            '$store': path.resolve(process.cwd(), './app/pages/store'),
         }
     },
     // 配置插件
@@ -94,26 +118,43 @@ module.exports = {
             __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false, // 禁用生产环境显示水合信息
         }),
         // 构造最终渲染的页面模板
-        new HtmlWebpackPlugin({
-            // 产物（最终模板）输出路径
-            filename: path.resolve(process.cwd(), './app/public/dist/', 'entry.page1.tpl'),
-            // 指定要使用的模板
-            template: path.resolve(process.cwd(), './app/view/entry.tpl'),
-            // 要注入的代码块
-            chunks: ['entry.page1'],
-        }),
-        new HtmlWebpackPlugin({
-            // 产物（最终模板）输出路径
-            filename: path.resolve(process.cwd(), './app/public/dist/', 'entry.page2.tpl'),
-            // 指定要使用的模板
-            template: path.resolve(process.cwd(), './app/view/entry.tpl'),
-            // 要注入的代码块
-            chunks: ['entry.page2'],
-        })
+        ...htmlWebpackPluginList,
     ],
 
     // 配置优化(代码分割，模块合并，tree-shaking, 压缩等优化策略)
     optimization: {
-        
+        /**
+         * 代码分割
+         * 把 js 文件打包成多种类型
+         * ventor : 第三方库, 基本不会改动
+         * common : 业务组件代码的公共部分，改动较少
+         * entry.{page} 不用页面 enrty 里的业务组件代码的差异部分，会经常改动
+         * 目的： 把改动和频率不一样的js区分出来，以达到更好利用浏览器缓存的效果
+         */
+        splitChunks: {
+            chunks: 'all', // 对同步和异步模块都进行分割
+            maxAsyncRequests: 10, // 按需加载时的最大并行请求数
+            maxInitialRequests: 10, // 入口点的最大并行请求数
+            cacheGroups: {
+                // 第三方库
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    priority: 20, // 优先级 数字越大优先级越高
+                    enforce: true, // 强制生成
+                    reuseExistingChunk: true, // 如果模块已经被打包过，则复用
+                },
+                // 公共模块
+                common: {
+                    name: 'common',
+                    minChunks: 2, // 最小引用次数, 被两处文件引用即被视为公共模块
+                    minSize: 1, // 最小分割文件大小 （1 byte）
+                    priority: 10, // 优先级
+                    reuseExistingChunk: true, // 复用
+                },
+            }
+        },
+        // 将 webpack 运行时生产的代码打包到 runtime.js 中
+        runtimeChunk: true,
     },
 }
