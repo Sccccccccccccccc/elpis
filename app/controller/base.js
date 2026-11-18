@@ -21,6 +21,7 @@ module.exports = (app) => class BaseController {
     success(ctx, data = {}, metadata={}){
         ctx.status = 200;
         ctx.body = {
+            success: true,
             data,
             metadata
         }

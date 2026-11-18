@@ -1,6 +1,5 @@
-import { createApp } from "vue";
-import Page1 from "./page1.vue";
+import boot from '@/boot.js'
+import page1 from './page1.vue'
 
-const app = createApp(Page1);
+boot(page1);
 
-app.mount("#root");

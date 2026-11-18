@@ -34,7 +34,8 @@ const webpackConfig = merge(baseConfig, {
     // 指定开发坏境模式
     mode: 'development',
     // souceMap 配置, 呈现代码的映射关系，方便调试
-    devtool: 'cheap-module-eval-source-map',
+    // webpack 5 对 devtool 关键字顺序有严格校验，必须是 eval-cheap-module-source-map
+    devtool: 'eval-cheap-module-source-map',
     // 生产环境的 output 配置
     output: {
         filename: 'js/[name]_[chunkhash:8].bundle.js',
