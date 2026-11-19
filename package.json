@@ -10,7 +10,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "set \"NODE_ENV=local\" && mocha \"test/**/*.js\" --exit",
     "lint": "eslint --quiet --ext js,vue .",
     "dev": "set \"NODE_ENV=local\" && node ./index.js",
     "beta": "set \"NODE_ENV=beta\" && node ./index.js",

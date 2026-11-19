@@ -5,6 +5,7 @@
 module.exports = {
     model: 'dashboard',
     name: '课程管理',
+    desc: '含视频、用户管理的课程后台',
     menu: [
         {
             key: 'video',

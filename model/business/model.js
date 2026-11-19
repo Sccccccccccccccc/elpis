@@ -5,6 +5,7 @@
 module.exports = {
     model: 'dashboard',
     name: '电商系统',
+    desc: '含商品、订单、客户管理的电商后台',
     menu: [
         {
             key: 'product',
