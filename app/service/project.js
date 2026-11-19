@@ -1,5 +1,7 @@
 module.exports = (app) => {
     const BaseService = require('./base')(app);
+    const modelList = require('../../model/index.js')(app);
+    console.log('modelList', JSON.stringify(modelList));
     return class ProjectService extends BaseService {
         
         async getProjectList() {
@@ -7,11 +9,13 @@ module.exports = (app) => {
             return [
                 {
                     id: 1,
-                    name: '项目1'
+                    name: '项目1',
+                    desc: '项目1描述'
                 },
                 {
                     id: 2,
-                    name: '项目2'
+                    name: '项目2',
+                    desc: '项目2描述'
                 }
             ]
         }
