@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark" style="height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/normalize.css">
     <link rel="icon" type="image/x-icon" href="/static/icon.png">
-    <title>{{name}}？</title>
+    <title>{{name}}</title>
     <style>
         body { padding: 24px; font-family: system-ui, sans-serif; }
         section { margin-bottom: 28px; }

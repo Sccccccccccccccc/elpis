@@ -1,0 +1,24 @@
+{
+  // 让 VS Code 的 JS/TS 语言服务识别 webpack 的 resolve.alias，
+  // 从而支持 Ctrl+Click 跳转、自动补全和 "找不到模块" 的提示。
+  // 对应配置见 app/webpack/config/webpack.base.js 的 resolve.alias
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@": ["app/pages"],
+      "@/*": ["app/pages/*"],
+      "$weidgets": ["app/pages/weidgets"],
+      "$weidgets/*": ["app/pages/weidgets/*"],
+      "$common": ["app/pages/common"],
+      "$common/*": ["app/pages/common/*"],
+      "$store": ["app/pages/store"],
+      "$store/*": ["app/pages/store/*"]
+    },
+    "allowJs": true,
+    "checkJs": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2019"
+  },
+  "exclude": ["node_modules", "app/public/dist", "logs"]
+}
