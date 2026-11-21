@@ -25,7 +25,7 @@
                             </div>
                             <template #footer>
                                 <el-row justify="end">
-                                    <el-button link type="primary" @click="onEnter(projItem.key)">
+                                    <el-button link type="primary" @click="onEnter(projItem)">
                                         进入
                                     </el-button>
                                 </el-row>
@@ -64,9 +64,7 @@ async function getModeList() {
         return;
     }
 
-    modeList.value = res.data;
-    console.log('modeList', modeList.value);
-    
+    modeList.value = res.data;    
 }
 
 onMounted( () => {
@@ -74,7 +72,8 @@ onMounted( () => {
 });
 
 const onEnter = (projItem) => {
-    console.log('onEnter', projItem);
+    const { origin } = window.location;
+    window.open(`${origin}/view/dashboard#${projItem.homePage}`);
 }
 
 </script>

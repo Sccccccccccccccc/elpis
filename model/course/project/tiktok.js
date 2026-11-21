@@ -2,7 +2,7 @@ module.exports = {
     model: 'dashboard',
     name: '抖音课堂',
     desc: '抖音课堂管理系统',
-    homePage: '',
+    homePage: '/todo?project_key=tiktok&key=video',
     menu: [
         {
             key: 'traffic',

@@ -54,7 +54,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import headerContainer from '@/widget/header-container/assets/header-container.vue';
 import SubMenu from './complex-view/sub-menu/sub-menu.vue';
 import { ArrowDown } from '@element-plus/icons-vue';
@@ -63,6 +64,8 @@ import { useProjectStore } from '@/store/project.js';
 const menuStore = useMenuStore();
 const projectStore = useProjectStore();
 
+const route = useRoute();
+
 defineProps({
   projectName: {
     type: String,
@@ -70,13 +73,55 @@ defineProps({
   }
 })
 
+const emit = defineEmits(['menu-select']);
+
 const activeKey = ref('');
-const onMenuSelect = (key) => {
-  activeKey.value = key;
+
+watch(() => route.query.key, () => {
+    setActiveKey();
+})
+
+watch(() => menuStore.menuList, () => {
+    setActiveKey();
+})
+
+onMounted(() => {
+    setActiveKey();
+})
+
+const setActiveKey = () => {
+    const menuItem = menuStore.findMenuItem({
+        key: 'key',
+        value: route.query.key,
+    });
+    activeKey.value = menuItem?.key ?? '';
 }
 
-const handleProjectCommand = (command) => {
-  projectStore.setProject(command);
+const onMenuSelect = (menuKey) => {
+  const menuItem = menuStore.findMenuItem({
+        key: 'key',
+        value: menuKey,
+  })
+
+  // 找不到对应菜单配置时直接忽略，避免把 undefined 继续往下传
+  if (!menuItem) {
+    return;
+  }
+
+  // 先更新高亮，点击后立即有反馈，不必等路由 query 变化
+  activeKey.value = menuItem.key;
+  emit('menu-select', menuItem);
+}
+
+const handleProjectCommand = (event) => {
+  const projectItem = projectStore.projectList.find( item => item.key === event);
+  if(!projectItem || !projectItem.homePage) {
+    return;
+  }
+
+  const { origin, pathname } = window.location;
+  window.location.replace(`${origin}${pathname}#${projectItem.homePage}`);
+  window.location.reload();
 }
 
 </script>

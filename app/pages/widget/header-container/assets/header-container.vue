@@ -23,7 +23,7 @@
                             {{ username }}<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <template #dropdown>
-                            <el-dropdown-item command="logout" @click="logout">退出登录</el-dropdown-item>
+                            <el-dropdown-item command="" @click="">退出登录</el-dropdown-item>
                         </template>
                     </el-dropdown>
                 </el-row>

@@ -2,7 +2,7 @@ module.exports = {
     model: 'dashboard',
     name: 'B站大学',
     desc: 'BiliBili管理系统',
-    homePage: '',
+    homePage: '/todo?project_key=bilibili&key=video',
     menu: [
         {
             key: 'video',
