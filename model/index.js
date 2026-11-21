@@ -81,6 +81,7 @@ module.exports = (app) => {
             }
             modelItem.project[projKey] = require(path.resolve(file));
             modelItem.project[projKey].key = projKey; // 注入 projectkey
+            modelItem.project[projKey].modelKey = modelKey; // 注入 modelKey
 
         }
 

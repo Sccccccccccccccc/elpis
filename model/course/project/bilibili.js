@@ -9,11 +9,11 @@ module.exports = {
             name: '视频管理',
         },
         {
-            key: 'info',
+            key: 'resource',
             name: '课程资料',
             menuType: 'module',
             moduleType: 'sider',
-            customConfig: {
+            siderConfig: {
                 menu: [
                     {
                         key: 'pdf',

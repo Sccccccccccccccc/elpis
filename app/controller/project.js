@@ -1,6 +1,51 @@
 module.exports = (app, router) => {
     const BaseController = require('./base')(app);
      return class ProjectController extends BaseController {
+
+        /**
+         * 根据 ProjectKey 获取项目配置
+         */
+
+        get(ctx) {
+            const { project_key: projectKey } = ctx.request.query;
+            const { project: projectService } = app.service;
+            const projectConfig = projectService.get(projectKey);
+
+            if (!projectConfig) {
+                this.fail(ctx, 50000, '获取项目异常');
+                return;
+            }
+
+            this.success(ctx, projectConfig);
+
+        }
+
+        /**
+         * 获取当前 ProjectKey 模型下的项目列表（如果无 ProjectKey, 全量获取）
+         */
+        getList(ctx) {                        
+            const { project_key: projectKey } = ctx.request.query;
+            const { project: projectService } = app.service;
+            // service 内部按 project_key 解构，这里必须保持同名，不能简写成 { projectKey }
+            const projectList = projectService.getList({ project_key: projectKey });
+
+            const dtoProjectList = [];
+
+            // 构造关键数据 list
+            projectList.forEach(project => {
+                const { modelKey, key, name, desc, homePage } = project;
+                dtoProjectList.push({
+                    modelKey,
+                    key,
+                    name,
+                    desc,
+                    homePage
+                })
+            })
+
+            this.success(ctx, dtoProjectList);
+
+        }
          
         /**
          * 获取所有模型与项目的结构化数据

@@ -17,12 +17,14 @@ module.exports = {
             key: 'data',
             name: '数据分析',
             menuType: 'module',
+            moduleType: 'sider',
             siderConfig: {
                 menu: [
                     {
                         key: 'analysis',
                         name: '电商罗盘',
-                        menuType: 'custom',
+                        menuType: 'module',
+                        moduleType: 'custom',
                         customConfig: {
                             path: '/todo'
                         }
@@ -30,14 +32,24 @@ module.exports = {
                     {
                         key: 'sider-search',
                         name: '信息查询',
-                        menuType: 'iframe',
+                        menuType: 'module',
+                        moduleType: 'iframe',
                         iframeConfig: {
                             path: 'http://www.baidu.com'
                         }
                     }
                 ]
             }
-        }
+        },
+        {
+            key: 'search',
+            name: '信息查询',
+            moduleType: 'iframe',
+            menuType: 'module',
+            iframeConfig: {
+                path: 'http://www.baidu.com'
+            }
+        },
     ]
 
 }
