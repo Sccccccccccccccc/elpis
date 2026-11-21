@@ -12,7 +12,7 @@
   "scripts": {
     "test": "set \"NODE_ENV=local\" && mocha \"test/**/*.js\" --exit",
     "lint": "eslint --quiet --ext js,vue .",
-    "dev": "set \"NODE_ENV=local\" && node ./index.js",
+    "dev": "set \"NODE_ENV=local\" && node --watch-path=./model --watch-path=./app/controller --watch-path=./app/service --watch-path=./app/router --watch-path=./app/router-schema --watch-path=./app/middleware --watch-path=./app/extend --watch-path=./config --watch-path=./elpis-core --watch-preserve-output ./index.js",
     "beta": "set \"NODE_ENV=beta\" && node ./index.js",
     "prod": "set \"NODE_ENV=production\" && node ./index.js",
     "build:dev": "node --max_old_space_size=4096 ./app/webpack/dev.js",
