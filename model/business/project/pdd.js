@@ -12,6 +12,11 @@ module.exports = {
         {
             key: 'client',
             name: '商品管理（并夕夕）',
+            moduleType: 'schema',
+            schemaConfig: {
+                api: '/api/pdd/product',
+                schema: {}
+            }
         },
         {
             key: 'data',
