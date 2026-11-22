@@ -42,7 +42,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import curl from '@/common/curl';
-import headerContainer from '@/widget/header-container/assets/header-container.vue';
+import HeaderContainer from '@/widget/header-container/assets/header-container.vue';
 
 const loading = ref(false);
 const modeList = ref([]);

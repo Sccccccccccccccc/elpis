@@ -11,7 +11,7 @@
         >
             <div v-for="item in menuStore.menuList" :key="item.key">
                 
-                <SubMenu v-if="item.subMenu && item.subMenu.length" :menuItem="item" />
+                <sub-menu v-if="item.subMenu && item.subMenu.length" :menuItem="item" />
                 <el-menu-item v-else :index="item.key">
                     {{ item.name }}
                 </el-menu-item>
@@ -25,7 +25,7 @@
             <span class="project-list">
                 {{ projectName }}
                 <el-icon class="el-icon--right" v-if="projectStore.projectList.length > 1">
-                    <ArrowDown />
+                    <arrow-down />
                 </el-icon>
             </span>
             <template v-if="projectStore.projectList.length > 1" #dropdown>
@@ -56,7 +56,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import headerContainer from '@/widget/header-container/assets/header-container.vue';
+import HeaderContainer from '@/widget/header-container/assets/header-container.vue';
 import SubMenu from './complex-view/sub-menu/sub-menu.vue';
 import { ArrowDown } from '@element-plus/icons-vue';
 import { useMenuStore } from '@/store/menu.js';

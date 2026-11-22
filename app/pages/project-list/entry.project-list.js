@@ -1,4 +1,4 @@
 import boot from '@/boot.js'
-import projectList from './project-list.vue'
+import ProjectList from './project-list.vue'
 
-boot(projectList);
+boot(ProjectList);

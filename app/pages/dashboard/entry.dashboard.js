@@ -1,5 +1,5 @@
 import boot from "@/boot.js";
-import dashboard from "./dashboard.vue";
+import Dashboard from "./dashboard.vue";
 
 const routes = [];
 
@@ -25,15 +25,15 @@ routes.push({
     component: () => import('./complex-view/sider-view/sider-view.vue'),
     children: [
         {
-            path: '/iframe',
+            path: 'iframe',
             component: () => import('./complex-view/iframe-view/iframe-view.vue')
         },
         {
-            path: '/schema',
+            path: 'schema',
             component: () => import('./complex-view/schema-view/schema-view.vue')
         },
         {
-            path: '/todo',
+            path: 'todo',
             component: () => import('./todo-view/todo-view.vue')
         }
     ]
@@ -45,4 +45,4 @@ routes.push({
     component: () => import('./complex-view/sider-view/sider-view.vue'),
 })
 
-boot(dashboard, { routes });
+boot(Dashboard, { routes });

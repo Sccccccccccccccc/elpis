@@ -1,10 +1,10 @@
 <template>
     <el-config-provide :locale="zhCn">
-        <headerView :projectName="projectName" @menu-select="onMenuSelect">
+        <header-view :projectName="projectName" @menu-select="onMenuSelect">
             <template #main-content>
-                <moduleView></moduleView>
+                <module-view></module-view>
             </template>
-        </headerView>
+        </header-view>
     </el-config-provide>
 </template>
 
@@ -13,8 +13,8 @@ import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import curl from '@/common/curl.js';
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import headerView from './complex-view/header-view/header-view.vue';
-import moduleView from './complex-view/module-view/module-view.vue';
+import HeaderView from './complex-view/header-view/header-view.vue';
+import ModuleView from './complex-view/module-view/module-view.vue';
 import { useMenuStore } from '@/store/menu.js';
 import { useProjectStore } from '@/store/project.js';
 
