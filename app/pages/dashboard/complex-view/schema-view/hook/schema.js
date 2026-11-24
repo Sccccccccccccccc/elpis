@@ -9,6 +9,8 @@ export const useSchema = () => {
     const api = ref('');
     const tableSchema = ref({});
     const tableConfig = ref({});
+    const searchSchema = ref({});
+    const searchConfig = ref({});
 
     // 通用构建 schema 方法，清除噪音（删除其他字段）
     const buildDtoSchema = (_schema, comName) => {
@@ -50,7 +52,9 @@ export const useSchema = () => {
         if( !mItem?.schemaConfig ) {
             api.value = '';
             tableSchema.value = {};
-            tableConfig.value = {};
+            tableConfig.value = undefined;
+            searchSchema.value = {};
+            searchConfig.value = undefined;
             return;
         }
 
@@ -62,6 +66,17 @@ export const useSchema = () => {
         api.value = schemaConfig.api ?? '';
         tableSchema.value = buildDtoSchema(configSchema, 'table');
         tableConfig.value = schemaConfig.tableConfig ?? {};
+        // 构造 searchSchema 和 searchConfig
+        const dtoSearchSchema = buildDtoSchema(configSchema, 'search');
+        // 某些页面跳转时可能附带搜索项
+        for( const key in dtoSearchSchema.properties ) {
+            if( route.query[key] !== undefined) {
+                dtoSearchSchema.properties[key].option.default = route.query[key];
+            }
+        }
+        searchSchema.value = dtoSearchSchema;
+        searchConfig.value = schemaConfig.searchConfig ?? {};
+
     }
 
     // immediate: 组件挂载时先构建一次；菜单异步返回后由 menuList 变化再构建
@@ -82,5 +97,7 @@ export const useSchema = () => {
         api,
         tableSchema,
         tableConfig,
+        searchSchema,
+        searchConfig,
     }
 }

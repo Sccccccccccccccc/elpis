@@ -84,11 +84,18 @@ const props = defineProps({
     },
 
     /**
-     * 表格数据源 api，请求路径为 `${api}/list`
+     * 表格数据源 api
      */
     api: {
         type: String,
         default: '',
+    },
+
+    /**
+     * api 请求参数, 请求 API 时携带
+     */
+    apiParams: {
+        type: Object,
     },
 
     /**
@@ -106,7 +113,7 @@ const props = defineProps({
     },
 });
 
-const { schema, api, buttons } = toRefs(props);
+const { schema, api, buttons, apiParams } = toRefs(props);
 const emit = defineEmits(['operate']);
 
 const loading = ref(false);
@@ -199,6 +206,7 @@ const fetchTableData = async () => {
             method: 'get',
             url: `${api.value}/list`,
             query: {
+                ...apiParams.value,
                 page: currentPage.value,
                 // 后端 list 接口的 query schema 约定的是 size
                 size: pageSize.value,
@@ -283,7 +291,7 @@ const onCurrentChange = (value) => {
 // schema / api 变化时统一走 loadTableData 的防抖：
 // 菜单数据、schema 可能在多个 tick 内连续更新，合并后只发一次请求
 watch(
-    [schema, api],
+    [schema, api, apiParams],
     () => {
         currentPage.value = 1;
         pageSize.value = 10;

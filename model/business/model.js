@@ -17,7 +17,6 @@ module.exports = {
                 schema: {
                     type: 'object',
                     properties: {
-
                         product_id: {
                             type: 'string',
                             title: '商品ID',
@@ -32,6 +31,9 @@ module.exports = {
                             tableOption: {
                                 width: 200,
                                 'show-overflow-tooltip': true
+                            },
+                            searchOption: {
+                                comType: 'input',
                             }
                         },
                         price: {
@@ -39,6 +41,10 @@ module.exports = {
                             title: '价格',
                             tableOption: {
                                 width: 200,
+                            },
+                            searchOption: {
+                                comType: 'dynamicSelect',
+                                api: '/api/project/product_enum/list'
                             }
                         },
                         inventory: {
@@ -46,19 +52,39 @@ module.exports = {
                             title: '库存',
                             tableOption: {
                                 width: 200,
+                            },
+                        },
+                        status: {
+                            type: 'string',
+                            title: '状态',
+                            tableOption: {
+                                width: 200,
+                            },
+                            searchOption: {
+                                comType: 'select',
+                                enumList: [
+                                    {
+                                        label: '全部',
+                                        value: '-1'
+                                    },
+                                    {
+                                        label: '上架',
+                                        value: '1'
+                                    },
+                                    {
+                                        label: '下架',
+                                        value: '0'
+                                    }
+                                ]
                             }
                         },
-                        // status: {
-                        //     type: 'string',
-                        //     title: '状态',
-                        //     tableOption: {
-                        //         width: 200,
-                        //     }
-                        // },
                         create_time: {
                             type: 'string',
                             title: '创建时间',
-                            tableOption: {}
+                            tableOption: {},
+                            searchOption: {
+                                comType: 'dateRange',
+                            }
                         }
 
                     }

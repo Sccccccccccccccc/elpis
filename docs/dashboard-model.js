@@ -51,8 +51,24 @@
                         tableConfig: {
                             ...elTableColumnConfig, // 标准 el-table-column 配置
                             toFixed: 0, // 保留小数点后几位
-                            visiable: true, // 是否在表格中显示, 默认为true, false或不配置时表示不在表单中展示
+                            visiable: true, // 是否在表格中显示, 默认为true, false时表示不在表单中展示
                         },
+
+                        // 字段在 search-bar 中的相关配置
+                        searchConfig: {
+                            ...elComponentConfig, // 标准 el-component(el-form、el-input、el-select等) 配置
+                            comType: '', // 配置组件类型 'input/select/...'
+                            default: '', // 搜索框展示的默认值
+
+                            // 当 comType 为 select 时，可配置
+                            enumList: [{
+                                label: '', // 下拉框选项名称
+                                value: '', // 下拉框选项值
+                            }],
+
+                            // comType === 'dynamicSelect' 时，可配置
+                            api: '', // 动态下拉框请求接口
+                        }
                     },
 
                     // table 相关配置

@@ -20,6 +20,7 @@
             ref="schemaTableRef"
             :schema="tableSchema"
             :api="api"
+            :apiParams="apiParams"
             :buttons="tableConfig?.rowButtons ?? []"
             @operate="operationHandler"
         >
@@ -38,6 +39,7 @@ const emit = defineEmits(['operate']);
 
 const { 
     api, 
+    apiParams,
     tableSchema, 
     tableConfig 
 } = inject('schemaViewData');
