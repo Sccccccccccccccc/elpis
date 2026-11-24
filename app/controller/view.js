@@ -8,7 +8,13 @@ module.exports = (app, router) => {
          */
 
         async render(ctx) {
+            // 路由参数在 ctx.params 上（ctx.request 上没有 params），query 用 ctx.query
+            app.logger.info(`[ViewController] url: ${ctx.url}`);
+            app.logger.info(`[ViewController] query: ${JSON.stringify(ctx.query, null, 2)}`);
+            app.logger.info(`[ViewController] params: ${JSON.stringify(ctx.params, null, 2)}`);
+
             await ctx.render(`dist/entry.${ctx.params.page}`, {
+                project_key: ctx.query.project_key,
                 name: app.options?.name,
                 env: app.env.get(),
                 options: JSON.stringify(app.options),

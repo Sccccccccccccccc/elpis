@@ -2,7 +2,7 @@ module.exports = {
 
     name: '狗东11',
     desc: '狗东电商系统',
-    homePage: '/todo?project_key=jd&key=product',
+    homePage: '/schema?project_key=jd&key=product',
     menu: [
         {
             key: 'shop-setting',

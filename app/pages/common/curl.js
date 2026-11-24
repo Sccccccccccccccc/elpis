@@ -34,6 +34,16 @@ const curl = ({
     const signKey = 'djasiodajdalsjifpasdjoas'
     const st = Date.now()
 
+    const dtoHeaders = {
+        ...headers,
+        s_t: st,
+        s_sign: md5(`${signKey}_${st}`),
+    }
+
+    if( url.indexOf('/api/project') > -1 ) {
+        dtoHeaders.project_key = window.project_key;
+    }
+
     // 构造请求参数（转换为axios参数）
     const ajaxSettings = {
         url,
@@ -42,11 +52,7 @@ const curl = ({
         data,
         responseType,
         timeout,
-        headers: {
-            ...headers,
-            s_t: st,
-            s_sign:  md5(`${signKey}_${st}`),
-        }
+        headers: dtoHeaders,
     }
 
     return axios.request(ajaxSettings).then( (res) => {
@@ -62,6 +68,8 @@ const curl = ({
                 ElMessage.error('请求参数异常');
             }else if( code === 445 ) {
                 ElMessage.error('请求不合法');
+            }else if( code === 446 ) {
+                ElMessage.error('缺少项目必要参数');
             }else if( code === 50000 ) {
                 ElMessage.error(message);
             }else {

@@ -15,7 +15,7 @@
                         :menu-item="item"
                     />
                     <!-- module -->
-                    <el-menu-item v-else :key="item.key" :index="item.key">
+                    <el-menu-item v-else :index="item.key">
                         {{ item.name }}
                     </el-menu-item>
                 </template>
@@ -78,13 +78,13 @@ const handleMenuSelect = (menuKey, { replace = false } = {}) => {
         custom: customConfig?.path,
     };
 
-    const path = pathMap[moduleType];
-    if (!path) {
+    const _path = pathMap[moduleType];
+    if (!_path) {
         return;
     }
 
     const target = {
-        path: `/sider${path}`,
+        path: `/view/dashboard/sider${_path}`,
         query: {
             key: route.query.key,
             sider_key: menuKey,

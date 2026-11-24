@@ -13,7 +13,7 @@ module.exports = (app) => {
 
     return async function apiParamsVerify(ctx, next) {
         
-        // 只对 API 请求进行校验
+        // 只对 API 做参数校验
         if (ctx.path.indexOf('/api') < 0) {
             return await next();
         }

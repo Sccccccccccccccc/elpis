@@ -2,7 +2,7 @@ module.exports = {
 
     name: '并夕夕',
     desc: '并夕夕电商系统',
-    homePage: '/todo?project_key=pdd&key=product',
+    homePage: '/schema?project_key=pdd&key=product',
     menu: [
         {
             key: 'product',

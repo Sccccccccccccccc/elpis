@@ -24,7 +24,17 @@
 </head>
 <body>
     <div id="app"></div>
+    <input id="project_key" type="hidden" value="{{ project_key }}" style="display: none;" />
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/js-md5@0.8.3/src/md5.min.js"></script>
+<script type="text/javascript">
+    try {
+        window.project_key = document.getElementById('project_key').value;
+    } catch (e) {
+        
+    }
+</script>
+
+
 </html>

@@ -1,11 +1,11 @@
 <template>
-    <el-config-provide :locale="zhCn">
+    <el-config-provider :locale="zhCn">
         <header-view :projectName="projectName" @menu-select="onMenuSelect">
             <template #main-content>
                 <module-view></module-view>
             </template>
         </header-view>
-    </el-config-provide>
+    </el-config-provider>
 </template>
 
 <script setup>
@@ -57,9 +57,7 @@ async function getProjectConfig() {
 }
 
 // 点击头部菜单回调：根据 moduleType 跳转到对应的视图路由
-const onMenuSelect = (menuItem) => {
-    console.log('onMenuSelect', menuItem);
-    
+const onMenuSelect = (menuItem) => {    
     if (!menuItem) return;
 
     const { menuType, moduleType, key, customConfig } = menuItem;
@@ -77,13 +75,13 @@ const onMenuSelect = (menuItem) => {
         custom: customConfig?.path
     }
 
-    const path = pathMap[moduleType];
+    const _path = pathMap[moduleType];
 
     // 未匹配到路由（例如 custom 没有配置 path）时不做跳转
-    if (!path) return;
+    if (!_path) return;
 
     router.push({
-        path,
+        path : `/view/dashboard${_path}`,
         query: {
             key,
             project_key: route.query.project_key

@@ -46,7 +46,36 @@
                         ...schema, // 标准schema配置
                         label: '', // 字段的中文名
                         type: '', // 字段类型
+
+                        // 字段在 table 中的相关配置
+                        tableConfig: {
+                            ...elTableColumnConfig, // 标准 el-table-column 配置
+                            toFixed: 0, // 保留小数点后几位
+                            visiable: true, // 是否在表格中显示, 默认为true, false或不配置时表示不在表单中展示
+                        },
                     },
+
+                    // table 相关配置
+                    tableConfig: {
+                        headerButtons: [{
+                            label: '', // 按钮名称
+                            eventKey: '', // 按钮事件名
+                            eventOption: {}, // 按钮事件配置
+                            ...elButtonConfig, // 标准 el-button 配置
+                        }, ...],
+                        rowButtons: [{
+                            label: '', // 按钮名称
+                            eventKey: '', // 按钮事件名
+                            eventOption: {}, // 按钮事件配置
+                            // 当 eventKey === 'remove'
+                            params: {
+                                // paramKey = 参数的键值
+                                // rowValueKey = 表格行数据中参数对应的键值 (当格式为 schema:: tableKey时， 从table 获取相应字段)
+                                paramKey: rowValueKey,
+                            },
+                            ...elButtonConfig, // 标准 el-button 配置
+                        }, ...],
+                    }
                     ...
                 }
             },
