@@ -19,7 +19,7 @@ module.exports = {
                 properties: {
                     product_id: { type: 'string' },
                 },
-                required: ['product_id']
+                required: ['product_id', 'product_key']
             }
         }
     }

@@ -40,7 +40,7 @@ const curl = ({
         s_sign: md5(`${signKey}_${st}`),
     }
 
-    if( url.indexOf('/api/project') > -1 ) {
+    if( url.indexOf('/api/project') > -1 && window.project_key ) {
         dtoHeaders.project_key = window.project_key;
     }
 
