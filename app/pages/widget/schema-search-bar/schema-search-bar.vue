@@ -12,7 +12,7 @@
             <!-- v-for里为什么要有key? vue3中使用的是快速diff算法，存在key时才可以使用bound diff -->
             <!-- 动态组件区域 -->
             <component 
-                :ref="handleSearchComList"
+                :ref="searchComList"
                 :is="SearchItemConfig[item.option?.comType]?.component"
                 :schemaKey="key"
                 :schema="item"
@@ -83,9 +83,6 @@ const { schema } = toRefs(props);
 const emit = defineEmits(['load', 'search', 'reset' ]);
 
 const searchComList = ref([]);
-const handleSearchComList = (el) => {
-    searchComList.value.push(el);
-}
 
 const getValue = () => {
     let dtoObj = {};

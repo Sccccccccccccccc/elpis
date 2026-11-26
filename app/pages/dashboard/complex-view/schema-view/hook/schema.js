@@ -8,13 +8,14 @@ export const useSchema = () => {
 
     const api = ref('');
     const tableSchema = ref({});
-    const tableConfig = ref({});
+    const tableConfig = ref();
     const searchSchema = ref({});
-    const searchConfig = ref({});
+    const searchConfig = ref();
+    const components = ref({});
 
     // 通用构建 schema 方法，清除噪音（删除其他字段）
     const buildDtoSchema = (_schema, comName) => {
-        if( !_schema?.properties ) return {};
+        if (!_schema?.properties) return {};
 
         const dtoSchema = {
             type: 'object',
@@ -22,17 +23,25 @@ export const useSchema = () => {
         }
 
         // 提起有效 schema 字段信息
-        for( const key in _schema.properties ) {
+        for (const key in _schema.properties) {
             const props = _schema.properties[key];
-            if( props[`${comName}Option`]) {
+            if (props[`${comName}Option`]) {
                 let dtoProps = {}
-                for( const pKey in props) {
-                    if( pKey.indexOf('Option') < 0) {
+                for (const pKey in props) {
+                    if (pKey.indexOf('Option') < 0) {
                         dtoProps[pKey] = props[pKey];
                     }
                 }
                 // 处理 comName Option
-                dtoProps = Object.assign({}, dtoProps, { option: props[`${comName}Option`]});
+                dtoProps = Object.assign({}, dtoProps, { option: props[`${comName}Option`] });
+                dtoSchema.properties[key] = dtoProps;
+
+                // 处理 required 字段
+                const { required } = _schema;
+                if (required && required.find(pk => pk === key)) {
+                    dtoProps.option.required = true;
+                }
+                
                 dtoSchema.properties[key] = dtoProps;
             }
         }
@@ -49,12 +58,13 @@ export const useSchema = () => {
             value: siderKey ?? key,
         });
 
-        if( !mItem?.schemaConfig ) {
+        if (!mItem?.schemaConfig) {
             api.value = '';
             tableSchema.value = {};
             tableConfig.value = undefined;
             searchSchema.value = {};
             searchConfig.value = undefined;
+            components.value = {};
             return;
         }
 
@@ -69,13 +79,32 @@ export const useSchema = () => {
         // 构造 searchSchema 和 searchConfig
         const dtoSearchSchema = buildDtoSchema(configSchema, 'search');
         // 某些页面跳转时可能附带搜索项
-        for( const key in dtoSearchSchema.properties ) {
-            if( route.query[key] !== undefined) {
+        for (const key in dtoSearchSchema.properties) {
+            if (route.query[key] !== undefined) {
                 dtoSearchSchema.properties[key].option.default = route.query[key];
             }
         }
         searchSchema.value = dtoSearchSchema;
         searchConfig.value = schemaConfig.searchConfig ?? {};
+
+        // 构造 components = { key: 
+        //                      { schema: {}, config: {} } 
+        //                   }
+        const { componentConfig } = schemaConfig;
+        console.log('componentConfig', componentConfig, schemaConfig);
+        
+        if (componentConfig && Object.keys(componentConfig).length > 0) {
+            const dtoComponents = {};
+
+            for (const conName in componentConfig) {
+                dtoComponents[conName] = {
+                    schema: buildDtoSchema(configSchema, conName),
+                    config: componentConfig[conName],
+                }
+            }
+
+            components.value = dtoComponents;
+        }
 
     }
 
@@ -99,5 +128,6 @@ export const useSchema = () => {
         tableConfig,
         searchSchema,
         searchConfig,
+        components,
     }
 }

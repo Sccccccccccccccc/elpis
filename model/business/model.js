@@ -95,11 +95,14 @@ module.exports = {
                         {
                             label: '新增商品',
                             eventKey: 'showComponent',
+                            eventOption: {
+                                comName: 'createForm'
+                            },
                             type: 'primary',
                             plain: true,
                         }
                     ],
-                    rowButtons:[
+                    rowButtons: [
                         {
                             label: '修改',
                             eventKey: 'showComponent',
@@ -116,8 +119,14 @@ module.exports = {
                             },
                             type: 'danger',
                         }
-
-                    ]
+                    ],
+                },
+                // 动态组件
+                componentConfig: {
+                    createForm: {
+                        title: '新增商品',
+                        saveBtnText: '新增商品',
+                    }
                 }
             }
         },
