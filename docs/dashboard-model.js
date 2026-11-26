@@ -68,6 +68,23 @@
 
                             // comType === 'dynamicSelect' 时，可配置
                             api: '', // 动态下拉框请求接口
+                        },
+                        // 字段在不同动态 component 中的相关配置， 前缀对应 componentConfig 中的键值
+                        // 例如： componentConfig.createForm 这里对应 createFormOption
+                        // 字段在 createForm 相关配置
+                        createFormConfig: {
+                            ...elComponentConfig, // 继承 el-component(el-form、el-input、el-select等) 配置
+                            comType: '', // 配置组件类型 'input/select/...'
+                            visiable: true, // 是否展示
+                            disabled: false, // 是否禁用
+                            default: '', // 搜索框展示的默认值
+
+                            // 当 comType 为 select 时，可配置
+                            enumList: [{
+                                label: '', // 下拉框选项名称
+                                value: '', // 下拉框选项值
+                            }]
+
                         }
                     },
 
@@ -95,14 +112,31 @@
                     ...
                 }
             },
+            // table 相关配置
             tableConfig: {
-                
+                headerButtons: [{
+                    label: '', // 按钮名称
+                    eventKey: '', // 按钮事件名
+                    eventOption: {
+                    // 按钮事件配置
+                    // 当eventKey === 'showComponent'
+                        comName: '', // 动态组件名称
+
+                    }, 
+                }]
             },
             searchConfig: {
                 
             },
-            components: {
+            // 动态组件相关配置
+            componentConfig: {
+                // create-form 表单相关配置
+                createForm: {
+                    title: '', // 标题
+                    saveBtnText: '', // 保存按钮文本
 
+                }
+                // 支持 用户拓展
             }
 
 
