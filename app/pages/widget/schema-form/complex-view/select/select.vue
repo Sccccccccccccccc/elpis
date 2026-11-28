@@ -33,7 +33,7 @@ const props = defineProps({
         default: () => ({})
     },
     model: {
-        type: Object,
+        type: [String, Number],
         default: () => ({})
     },
 })

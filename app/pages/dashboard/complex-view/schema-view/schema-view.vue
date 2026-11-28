@@ -4,12 +4,9 @@
             ref="searchPanelRef"
             v-if="searchSchema?.properties && Object.keys(searchSchema.properties).length > 0" 
             @search="onSearch"
-        >
+        ></search-panel>
 
-        </search-panel>
-        <table-panel ref="tablePanelRef" @operate="onTableOperate">
-
-        </table-panel>
+        <table-panel ref="tablePanelRef" @operate="onTableOperate"></table-panel>
 
         <component
             v-for="(item, key) in components"
@@ -18,9 +15,7 @@
             ref="comListRef"
             @command="onComponentCommand"
         >
-
         </component>
-
     </el-row>
 </template>
 
@@ -89,7 +84,9 @@ function showComponent({ btnConfig, rowData }) {
 
     if( !comRef || typeof comRef.show !== 'function' ) { return; }
 
-    comRef.show({ rowData });
+    // 注意：这里直接把行数据传进去，不要再包一层 { rowData }，
+    // 否则子组件里 rowData[mainKey] 拿到的是 undefined
+    comRef.show(rowData);
 }
 </script>
 

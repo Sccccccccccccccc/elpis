@@ -62,6 +62,8 @@ const close = () => {
 }
 
 const submit = async () => {    
+    if( loading.value ) { return; }
+
     // 校验表单
     if( !schemaFormRef.value.validate()) { return; }
     loading.value = true;

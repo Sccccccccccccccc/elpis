@@ -84,7 +84,20 @@
                                 label: '', // 下拉框选项名称
                                 value: '', // 下拉框选项值
                             }]
+                        },
 
+                        editFormConfig: {
+                            ...elComponentConfig, // 继承 el-component(el-form、el-input、el-select等) 配置
+                            comType: '', // 配置组件类型 'input/select/...'
+                            visiable: true, // 是否展示
+                            disabled: false, // 是否禁用
+                            default: '', // 搜索框展示的默认值
+
+                            // 当 comType 为 select 时，可配置
+                            enumList: [{
+                                label: '', // 下拉框选项名称
+                                value: '', // 下拉框选项值
+                            }]
                         }
                     },
 
@@ -135,6 +148,12 @@
                     title: '', // 标题
                     saveBtnText: '', // 保存按钮文本
 
+                },
+                // edit-form 表单相关配置
+                editForm: {
+                    mainKey: '', // 表单主键，用于唯一标识要修改的对象
+                    title: '',
+                    saveBtnText: '',
                 }
                 // 支持 用户拓展
             }

@@ -23,6 +23,10 @@ module.exports = {
                             tableOption: {
                                 width: 300,
                                 'show-overflow-tooltip': true
+                            },
+                            editFormOption: {
+                                comType: 'input',
+                                disabled: true,
                             }
                         },
                         product_name: {
@@ -37,6 +41,10 @@ module.exports = {
                             },
                             createFormOption: {
                                 comType: 'input',
+                                default: '114514',
+                            },
+                            editFormOption: {
+                                comType: 'input',
                             }
                         },
                         price: {
@@ -50,6 +58,9 @@ module.exports = {
                                 api: '/api/project/product_enum/list'
                             },
                             createFormOption: {
+                                comType: 'inputNumber',
+                            },
+                            editFormOption: {
                                 comType: 'inputNumber',
                             }
                         },
@@ -102,6 +113,24 @@ module.exports = {
                                         value: '0'
                                     }
                                 ],
+                            },
+                            editFormOption: {
+                                comType: 'select',
+                                enumList: [
+                                    {
+                                        label: '全部',
+                                        value: '-1'
+                                    },
+                                    {
+                                        label: '上架',
+                                        value: '1'
+                                    },
+                                    {
+                                        label: '下架',
+                                        value: '0'
+                                    }
+                                ],
+                                visible: false, // 不可见，但依旧保持传参
                             }
                         },
                         create_time: {
@@ -133,6 +162,10 @@ module.exports = {
                             label: '修改',
                             eventKey: 'showComponent',
                             type: 'warning',
+                            eventOption: {
+                                comName: 'editForm',
+
+                            }
                         },
                         {
                             label: '删除',
@@ -152,6 +185,11 @@ module.exports = {
                     createForm: {
                         title: '新增商品',
                         saveBtnText: '新增商品',
+                    },
+                    editForm: {
+                        mainKey: 'product_id',
+                        title: '编辑商品',
+                        saveBtnText: '保存商品',
                     }
                 }
             }

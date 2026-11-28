@@ -27,7 +27,7 @@ const props = defineProps({
         default: undefined
     },
     model: {
-        type: Object,
+        type: String,
         default: undefined
     },
 })
