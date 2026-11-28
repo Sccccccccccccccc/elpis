@@ -27,6 +27,9 @@ module.exports = {
                             editFormOption: {
                                 comType: 'input',
                                 disabled: true,
+                            },
+                            detailPannelOption: {
+                                comType: 'input',
                             }
                         },
                         product_name: {
@@ -45,6 +48,9 @@ module.exports = {
                             },
                             editFormOption: {
                                 comType: 'input',
+                            },
+                            detailPannelOption: {
+                                comType: 'input',
                             }
                         },
                         price: {
@@ -62,6 +68,9 @@ module.exports = {
                             },
                             editFormOption: {
                                 comType: 'inputNumber',
+                            },
+                            detailPannelOption: {
+                                comType: 'inputNumber',
                             }
                         },
                         inventory: {
@@ -71,6 +80,9 @@ module.exports = {
                                 width: 200,
                             },
                             createFormOption: {
+                                comType: 'inputNumber',
+                            },
+                            detailPannelOption: {
                                 comType: 'inputNumber',
                             }
                         },
@@ -131,6 +143,23 @@ module.exports = {
                                     }
                                 ],
                                 visible: false, // 不可见，但依旧保持传参
+                            },
+                            detailPannelOption: {
+                                comType: 'select',
+                                enumList: [
+                                    {
+                                        label: '全部',
+                                        value: '-1'
+                                    },
+                                    {
+                                        label: '上架',
+                                        value: '1'
+                                    },
+                                    {
+                                        label: '下架',
+                                        value: '0'
+                                    }
+                                ],
                             }
                         },
                         create_time: {
@@ -139,6 +168,9 @@ module.exports = {
                             tableOption: {},
                             searchOption: {
                                 comType: 'dateRange',
+                            },
+                            detailPannelOption: {
+                                comType: 'input',
                             }
                         }
                     },
@@ -158,6 +190,14 @@ module.exports = {
                         }
                     ],
                     rowButtons: [
+                        {
+                            label: '查看',
+                            eventKey: 'showComponent',
+                            type: 'primary',
+                            eventOption: {
+                                comName: 'detailPannel'
+                            }
+                        },
                         {
                             label: '修改',
                             eventKey: 'showComponent',
@@ -190,6 +230,10 @@ module.exports = {
                         mainKey: 'product_id',
                         title: '编辑商品',
                         saveBtnText: '保存商品',
+                    },
+                    detailPannel: {
+                        mainKey: 'product_id',
+                        title: '商品详情',
                     }
                 }
             }

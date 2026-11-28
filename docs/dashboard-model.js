@@ -98,6 +98,14 @@
                                 label: '', // 下拉框选项名称
                                 value: '', // 下拉框选项值
                             }]
+                        },
+
+                        detailPannelConfig: {
+                            ...elComponentConfig, // 继承 el-component(el-form、el-input、el-select等) 配置
+                            comType: '', // 配置组件类型 'input/select/...'
+                            visiable: true, // 是否展示
+                            disabled: false, // 是否禁用
+                            default: '', // 搜索框展示的默认值
                         }
                     },
 
@@ -154,6 +162,11 @@
                     mainKey: '', // 表单主键，用于唯一标识要修改的对象
                     title: '',
                     saveBtnText: '',
+                },
+                // detail-pannel 详情面板相关配置
+                detailPannel: {
+                    mainKey: '', // 详情面板主键，用于唯一标识要查看的对象
+                    title: '',
                 }
                 // 支持 用户拓展
             }
