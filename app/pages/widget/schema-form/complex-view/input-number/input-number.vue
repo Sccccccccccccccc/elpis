@@ -1,31 +1,18 @@
 <template>
-    <el-row type="flex" align="middle" :gutter="10">
-        <!--label -->
-        <el-row justify="end">
-            <el-row 
-                v-if="schema.option?.required" 
-                type="flex" 
-                align="middle" 
-                justify="end"
-            >*</el-row>
-            {{ schema.label }}
-        </el-row>
-        <!-- value -->
-        <el-row justify="end">
-            <el-input-number
-                :controls="false"
-                v-model="dtoValue"
-                v-bind="schema.option"
-                :placeholder="placeholder"
-                @focus="onFocus"
-                @blur="onBlur"
-            ></el-input-number>
-        </el-row>
+    <div class="schema-form-item">
+        <el-input-number
+            :controls="false"
+            v-model="dtoValue"
+            v-bind="schema.option"
+            :placeholder="placeholder"
+            @focus="onFocus"
+            @blur="onBlur"
+        ></el-input-number>
         <!-- 错误信息 -->
-        <el-row v-if="validTips" justify="end">
-            {{ schema.errorMsg }}
-        </el-row>
-    </el-row>
+        <div v-if="validTip" class="schema-form-item__error">
+            {{ schema.errorMsg || validTip }}
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -110,8 +97,9 @@ const validate = () => {
                 console.error( validate.errors[0] );
                 validTip.value = '校验失败';
             }
+            return false;
         };
-        return false;
+        
     };
 
     return true;
@@ -131,9 +119,11 @@ const onBlur = () => {
     validate();
 }
 
+const name = ref('input-number');
 defineExpose({
     validate,
-    getValue
+    getValue,
+    name,
 })
 
 </script>

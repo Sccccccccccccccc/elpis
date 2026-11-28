@@ -5,6 +5,7 @@
     router.get('/api/project/product/list', businessController.getList.bind(businessController));
     router.get('/api/project/product_enum/list', businessController.getProductEnumList.bind(businessController))
 
+    router.post('/api/project/product', businessController.create.bind(businessController));
     router.delete('/api/project/product', businessController.remove.bind(businessController));
 
 }

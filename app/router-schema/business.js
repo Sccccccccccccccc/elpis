@@ -19,6 +19,21 @@ module.exports = {
         }
     },
     '/api/project/product': {
+        post: {
+            body: {
+                type: 'object',
+                properties: {
+                    product_name: { type: 'string' },
+                    // 价格用 input-number 提交的是数字，库存用普通 input 提交的是字符串，两种都收
+                    price: { type: ['number', 'string'] },
+                    status: { type: 'string' },
+                    inventory: { type: ['number', 'string'] },
+                },
+                // 只有商品名称是必填（和 model 里 schema.required 保持一致）；
+                // 其余字段没填时前端根本不会传，所以不能写进 required
+                required: ['product_name']
+            }
+        },
         delete: {
             body: {
                 type: 'object',

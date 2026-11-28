@@ -71,8 +71,12 @@ const onTableOperate = ({ btnConfig, rowData }) => {
     }
 }
 
-const onComponentCommand = (command) => {
-    
+// 响应组件事件
+const onComponentCommand = (data) => {
+    const { event } = data;
+    if(event === 'loadTableData') {
+        tablePanelRef.value.loadTableData();
+    }
 }
 
 // showComponent 展示动态组件

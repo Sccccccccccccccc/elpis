@@ -34,6 +34,9 @@ module.exports = {
                             },
                             searchOption: {
                                 comType: 'input',
+                            },
+                            createFormOption: {
+                                comType: 'input',
                             }
                         },
                         price: {
@@ -45,6 +48,9 @@ module.exports = {
                             searchOption: {
                                 comType: 'dynamicSelect',
                                 api: '/api/project/product_enum/list'
+                            },
+                            createFormOption: {
+                                comType: 'inputNumber',
                             }
                         },
                         inventory: {
@@ -53,6 +59,9 @@ module.exports = {
                             tableOption: {
                                 width: 200,
                             },
+                            createFormOption: {
+                                comType: 'inputNumber',
+                            }
                         },
                         status: {
                             type: 'string',
@@ -76,6 +85,23 @@ module.exports = {
                                         value: '0'
                                     }
                                 ]
+                            },
+                            createFormOption: {
+                                comType: 'select',
+                                enumList: [
+                                    {
+                                        label: '全部',
+                                        value: '-1'
+                                    },
+                                    {
+                                        label: '上架',
+                                        value: '1'
+                                    },
+                                    {
+                                        label: '下架',
+                                        value: '0'
+                                    }
+                                ],
                             }
                         },
                         create_time: {
@@ -86,8 +112,8 @@ module.exports = {
                                 comType: 'dateRange',
                             }
                         }
-
-                    }
+                    },
+                    required: [ 'product_name' ],
                 },
 
                 tableConfig: {

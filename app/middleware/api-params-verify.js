@@ -63,6 +63,9 @@ module.exports = (app) => {
         }
 
         if (!valid) {
+            // 把具体是哪一项校验失败打到日志里，否则前端只看到 442，很难定位
+            app.logger.error(`[API ${method} ${path}] 参数校验失败`, validate && validate.errors);
+
             ctx.status = 200;
             ctx.body = {
                 success: false,

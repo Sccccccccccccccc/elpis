@@ -1,33 +1,20 @@
 <template>
-    <el-row type="flex" align="middle" :gutter="10">
-        <!--label -->
-        <el-row justify="end">
-            <el-row 
-                v-if="schema.option?.required" 
-                type="flex" 
-                align="middle" 
-                justify="end"
-            >*</el-row>
-            {{ schema.label ?? schema.title }}
-        </el-row>
-        <!-- value -->
-        <el-row justify="end">
-            <el-cascader
-                v-model="dtoValue"
-                :options="cascaderOptions"
-                :props="cascaderProps"
-                :placeholder="placeholder"
-                :disabled="disabled"
-                :clearable="clearable"
-                class="schema-form__address-cascader"
-                @change="onChange"
-            />
-        </el-row>
+    <div class="schema-form-item">
+        <el-cascader
+            v-model="dtoValue"
+            :options="cascaderOptions"
+            :props="cascaderProps"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            :clearable="clearable"
+            class="schema-form__address-cascader"
+            @change="onChange"
+        />
         <!-- 错误信息 -->
-        <el-row v-if="validTips" justify="end">
-            {{ schema.errorMsg || validTips }}
-        </el-row>
-    </el-row>
+        <div v-if="validTip" class="schema-form-item__error">
+            {{ schema.errorMsg || validTip }}
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -53,7 +40,7 @@ const props = defineProps({
 const { schema, model } = toRefs(props)
 const { schemaKey } = props
 
-const validTips = ref(null)
+const validTip = ref(null)
 const dtoValue = ref([])
 
 // 区域数据：option.options 优先，方便接真实数据；没配就用内置 demo 数据
@@ -132,7 +119,7 @@ const initData = () => {
     dtoValue.value = normalizeToValues(
         hasModelValue ? modelValue : schema.value.option?.default
     )
-    validTips.value = null
+    validTip.value = null
 }
 
 onMounted(() => {
@@ -164,14 +151,14 @@ const getValue = () => {
 }
 
 const validate = () => {
-    validTips.value = null;
+    validTip.value = null;
 
     const labels = findLabelsByValues(cascaderOptions.value, dtoValue.value)
     const isEmpty = !Array.isArray(dtoValue.value) || labels.length === 0
 
     // 必填校验
     if (schema.value.option?.required && isEmpty) {
-        validTips.value = '不能为空'
+        validTip.value = '不能为空'
         return false
     }
 

@@ -1,30 +1,17 @@
 <template>
-    <el-row type="flex" align="middle" :gutter="10">
-        <!--label -->
-        <el-row justify="end">
-            <el-row 
-                v-if="schema.option?.required" 
-                type="flex" 
-                align="middle" 
-                justify="end"
-            >*</el-row>
-            {{ schema.label }}
-        </el-row>
-        <!-- value -->
-        <el-row justify="end">
-            <el-input
-                v-model="dtoValue"
-                v-bind="schema.option"
-                :placeholder="placeholder"
-                @focus="onFocus"
-                @blur="onBlur"
-            ></el-input>
-        </el-row>
+    <div class="schema-form-item">
+        <el-input
+            v-model="dtoValue"
+            v-bind="schema.option"
+            :placeholder="placeholder"
+            @focus="onFocus"
+            @blur="onBlur"
+        ></el-input>
         <!-- 错误信息 -->
-        <el-row v-if="validTips" justify="end">
-            {{ schema.errorMsg }}
-        </el-row>
-    </el-row>
+        <div v-if="validTip" class="schema-form-item__error">
+            {{ schema.errorMsg || validTip }}
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -37,11 +24,11 @@ const props = defineProps({
     },
     schema: {
         type: Object,
-        default: () => ({})
+        default: undefined
     },
     model: {
         type: Object,
-        default: () => ({})
+        default: undefined
     },
 })
 
@@ -51,7 +38,7 @@ const validTip = ref(null);
 const dtoValue = ref('')
 const placeholder = ref(schema.option?.placeholder ?? '请输入')
 
-const initData = () => {
+const initData = () => {    
     dtoValue.value = model.value ?? schema.option?.default;
     validTip.value = null;
 }
@@ -115,8 +102,9 @@ const validate = () => {
                 console.error( validate.errors[0] );
                 validTip.value = '校验失败';
             }
+            return false;
         };
-        return false;
+        
     };
 
     return true;
@@ -136,9 +124,11 @@ const onBlur = () => {
     validate();
 }
 
+const name = ref('input');
 defineExpose({
     validate,
-    getValue
+    getValue,
+    name,
 })
 
 </script>

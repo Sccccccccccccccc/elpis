@@ -81,6 +81,21 @@ module.exports = (app) => {
                 })
         }
 
+        create(ctx) {
+            const { 
+                product_name: productName, 
+                price,
+                inventory,
+            } = ctx.request.body
+
+            this.success(ctx, {
+                product_id: Date.now(),
+                product_name: productName,
+                price,
+                inventory,
+            })
+        }
+
         remove(ctx) {
             const { product_id } = ctx.request.body
             this.success(ctx, {

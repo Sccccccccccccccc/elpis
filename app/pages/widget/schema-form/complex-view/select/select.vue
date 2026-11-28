@@ -1,36 +1,23 @@
 <template>
-    <el-row type="flex" align="middle" :gutter="10">
-        <!--label -->
-        <el-row justify="end">
-            <el-row 
-                v-if="schema.option?.required" 
-                type="flex" 
-                align="middle" 
-                justify="end"
-            >*</el-row>
-            {{ schema.label }}
-        </el-row>
-        <!-- value -->
-        <el-row justify="end">
-            <el-select 
-                v-model="dtoValue" 
-                v-bind="schema.option" 
-                placeholder="请选择"
-                @change="onChange"
-            >
-                <el-option
-                    v-for="item in schema.option?.enumList"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                />
-            </el-select>
-        </el-row>
+    <div class="schema-form-item">
+        <el-select 
+            v-model="dtoValue" 
+            v-bind="schema.option" 
+            placeholder="请选择"
+            @change="onChange"
+        >
+            <el-option
+                v-for="item in schema.option?.enumList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+        </el-select>
         <!-- 错误信息 -->
-        <el-row v-if="validTips" justify="end">
-            {{ schema.errorMsg }}
-        </el-row>
-    </el-row>
+        <div v-if="validTip" class="schema-form-item__error">
+            {{ schema.errorMsg || validTip }}
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -56,7 +43,7 @@ const { model } = toRefs(props);
 const validTip = ref(null);
 const dtoValue = ref('')
 
-const initData = () => {
+const initData = () => {    
     dtoValue.value = model.value ?? schema.option?.default;
     validTip.value = null;
 }
@@ -102,9 +89,8 @@ const validate = () => {
             } else {
                 validTip.value = '不符合要求';
             }
+            return false;
         }
-
-        return false;
     };
 
     return true;
@@ -120,9 +106,11 @@ const onChange = (e) => {
     validate();
 }
 
+const name = ref('select');
 defineExpose({
     validate,
-    getValue
+    getValue,
+    name
 })
 
 </script>
